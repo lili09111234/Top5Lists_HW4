@@ -35,7 +35,7 @@ function AuthContextProvider(props) {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true
-                })
+                });
             }
             default:
                 return auth;
