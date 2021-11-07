@@ -16,6 +16,52 @@ getLoggedIn = async (req, res) => {
     })
 }
 
+loginUser = async (req, res) => {
+    try{
+        const {email,password}=req.body;
+        if(!email || !password){
+            return res
+                .status(400)
+                .json({ errorMessage: "Please enter Password or Enamil"});
+        }
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser){
+            console.log("existingUser");
+            const passwordHash = existingUser.passwordHash;
+            const passwordverify = await bcrypt.compare(password,passwordHash);
+            if (passwordverify){
+                const token = auth.signToken(existingUser);
+                await res.cookie("token", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none"
+                }).status(200).json({
+                    success: true,
+                    user: {
+                        firstName: existingUser.firstName,
+                        lastName: existingUser.lastName,
+                        email: existingUser.email
+                    }
+                }).send();
+            }
+            else{
+                return res
+                .status(400)
+                .json({ errorMessage: "Password error"});
+            }
+        }
+        else{
+            return res
+                .status(400)
+                .json({ errorMessage: "Email error"});
+        }
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).send();
+    }
+}
+
 registerUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
@@ -80,5 +126,6 @@ registerUser = async (req, res) => {
 
 module.exports = {
     getLoggedIn,
-    registerUser
+    registerUser,
+    loginUser
 }

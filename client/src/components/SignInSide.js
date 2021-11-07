@@ -41,10 +41,10 @@ export default function SignInSide() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-//  auth.loginUser({
-//  email: data.get('email'),
-//  password: data.get('password'),
-//}, store);
+    auth.loginUser({
+      email: data.get('email'),
+      password: data.get('password'),
+      }, store);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
