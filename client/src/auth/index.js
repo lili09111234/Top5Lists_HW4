@@ -66,6 +66,13 @@ function AuthContextProvider(props) {
         }
     }
 
+    auth.logoutUser = function(){
+        auth.user=null;
+        auth.loggedIn=false;
+        history.push("/");
+        console.log(history);
+    }
+
     auth.registerUser = async function(userData, store) {
         try{
             const response = await api.registerUser(userData);      
