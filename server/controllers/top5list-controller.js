@@ -1,4 +1,6 @@
 const Top5List = require('../models/top5list-model');
+const users = require('../models/user-model');
+const jwt = require("jsonwebtoken");
 
 createTop5List = (req, res) => {
     const body = req.body;
@@ -109,7 +111,13 @@ getTop5Lists = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5ListPairs = async (req, res) => {
-    await Top5List.find({ }, (err, top5Lists) => {
+        try {
+            const token = req.cookies.token;
+            const verified = jwt.verify(token, process.env.JWT_SECRET);
+            const resuser = await users.findById({_id: verified.userId}).lean();
+            console.log(resuser.email);
+         
+    await Top5List.find({ownerEmail: resuser.email  }, (err, top5Lists) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -121,18 +129,27 @@ getTop5ListPairs = async (req, res) => {
         }
         else {
             // PUT ALL THE LISTS INTO ID, NAME PAIRS
-            let pairs = [];
-            for (let key in top5Lists) {
-                let list = top5Lists[key];
-                let pair = {
-                    _id: list._id,
-                    name: list.name
-                };
-                pairs.push(pair);
+            try{
+                let pairs = [];
+                for (let key in top5Lists) {
+                    let list = top5Lists[key];
+                    let pair = {
+                        _id: list._id,
+                        name: list.name
+                    };
+                    pairs.push(pair);
+                }
+                return res.status(200).json({ success: true, idNamePairs: pairs })
             }
-            return res.status(200).json({ success: true, idNamePairs: pairs })
+            catch(error){
+                console.log(error);
+            }
         }
     }).catch(err => console.log(err))
+}
+catch(error){
+    console.log(error);
+    }
 }
 
 module.exports = {
