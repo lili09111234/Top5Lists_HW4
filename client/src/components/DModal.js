@@ -21,23 +21,33 @@ const style = {
 
 export default function DModal() {
   const { store } = useContext(GlobalStoreContext); 
+  function handledelete(){
+    store.deleteMarkedList();
+  }
+  function handleClose(){
+    store.unmarkListForDeletion();
+  }
+  var name="";
+  if(store.listMarkedForDeletion){
+    name = store.listMarkedForDeletion.name;
+  }
   return (
     <div>
       <Modal
-        open={false}
+        open={store.listMarkedForDeletion!=null}
         onClose={false}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Error
+            Delete Warning
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <Alert severity="error">WTF</Alert>
+          <Alert severity="warning">Are you sure you want to delete list {name}</Alert>
           </Typography>
-          <Button onClick={false}>YES</Button>
-          <Button onClick={false}>NO</Button>
+          <Button onClick={handledelete}>YES,DLETE THIS LIST</Button>
+          <Button onClick={handleClose}>NO,DO NOT DELETE</Button>
         </Box>
       </Modal>
     </div>

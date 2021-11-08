@@ -21,11 +21,14 @@ const style = {
 
 export default function BasicModal() {
   const { auth } = useContext(AuthContext); 
+  function hadnleClose(){
+    //auth.closeError;
+  }
   return (
     <div>
       <Modal
-        open={false}
-        onClose={false}
+        open={auth.errorMessage!=null}
+        onClose={hadnleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
