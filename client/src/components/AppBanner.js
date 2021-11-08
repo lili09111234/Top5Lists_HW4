@@ -49,7 +49,7 @@ export default function AppBanner() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/logIn/'>Existing User LogIn</Link></MenuItem>
+            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Existing User LogIn</Link></MenuItem>
         </Menu>
     );
     const loggedInMenu = 
@@ -81,7 +81,15 @@ export default function AppBanner() {
     }
     
     function getAccountMenu(loggedIn) {
+        if (auth.loggedIn){
+            console.log(auth.user);
+            var firstname= auth.user.firstName.charAt(0);
+            var lastname= auth.user.lastName.charAt(0);
+            return firstname+lastname;
+        }
+        else{
         return <AccountCircle />;
+        }
     }
 
     return (

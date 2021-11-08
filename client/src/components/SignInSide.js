@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GlobalStoreContext } from '../store'
-
+import { BasicModal } from '.';
 
 function Copyright(props) {
   return (
@@ -55,6 +55,7 @@ export default function SignInSide() {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
+        <BasicModal />
         <Grid
           item
           xs={false}
@@ -116,7 +117,7 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="http://localhost:3000/register/" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

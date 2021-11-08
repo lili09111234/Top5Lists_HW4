@@ -8,13 +8,15 @@ console.log("create AuthContext: " + AuthContext);
 // THESE ARE ALL THE TYPES OF UPDATES TO OUR AUTH STATE THAT CAN BE PROCESSED
 export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
-    REGISTER_USER: "REGISTER_USER"
+    REGISTER_USER: "REGISTER_USER",
+    SHOW_ERROR: "SHOW_ERROR"
 }
 
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        errorMessage: null
     });
     const history = useHistory();
 
@@ -28,13 +30,22 @@ function AuthContextProvider(props) {
             case AuthActionType.GET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: payload.loggedIn
+                    loggedIn: payload.loggedIn,
+                    errorMessage: null
                 });
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
+                });
+            }
+            case AuthActionType.SHOW_ERROR: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    errorMessage: payload.errorMessage
                 });
             }
             default:
@@ -89,7 +100,16 @@ function AuthContextProvider(props) {
             }
         }
         catch(err){
-            console.log(err.response);
+            if (err.response.status === 999) {
+                var str = JSON.stringify(err.response);
+                var re = JSON.parse(str);
+                authReducer({
+                    type: AuthActionType.SHOW_ERROR,
+                    payload: {
+                        errorMessage: re
+                    }
+                })
+            }
         }
     }
 
