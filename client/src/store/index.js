@@ -372,6 +372,7 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING AN ITEM
     store.setIsItemEditActive = function () {
+        store.isItemEditActive=true;
         storeReducer({
             type: GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE,
             payload: null
