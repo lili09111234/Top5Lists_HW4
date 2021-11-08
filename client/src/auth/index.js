@@ -88,8 +88,20 @@ function AuthContextProvider(props) {
             }
         }
         catch(err){
-            console.log(err.response);
+            if(err.response){
+            console.log(err.response.data.errorMessage);
+            auth.errorMessage=err.response.data.errorMessage;
+            history.push(history.location.pathname);
+            }
+            else{
+                console.log(err);
+            }
         }
+    }
+
+    auth.closeError = function(){
+        auth.errorMessage=null;
+        history.push(history.location.pathname);
     }
 
     auth.loginUser = async function(userData, store) {
@@ -105,17 +117,15 @@ function AuthContextProvider(props) {
                 history.push("/");
                 store.loadIdNamePairs();
             }
-        }
+        }   
         catch(err){
-            if (err.response.status === 999) {
-                var str = JSON.stringify(err.response);
-                var re = JSON.parse(str);
-                authReducer({
-                    type: AuthActionType.SHOW_ERROR,
-                    payload: {
-                        errorMessage: re
-                    }
-                })
+            if(err.response){
+            console.log(err.response.data.errorMessage);
+            auth.errorMessage=err.response.data.errorMessage;
+            history.push(history.location.pathname);
+            }
+            else{
+                console.log(err);
             }
         }
     }

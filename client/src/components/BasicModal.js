@@ -22,7 +22,7 @@ const style = {
 export default function BasicModal() {
   const { auth } = useContext(AuthContext); 
   function hadnleClose(){
-    //auth.closeError;
+    auth.closeError();
   }
   return (
     <div>
