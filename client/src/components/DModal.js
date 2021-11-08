@@ -36,6 +36,8 @@ export default function DModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <Alert severity="error">WTF</Alert>
           </Typography>
+          <Button onClick={false}>YES</Button>
+          <Button onClick={false}>NO</Button>
         </Box>
       </Modal>
     </div>

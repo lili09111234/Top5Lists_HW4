@@ -10,6 +10,7 @@ import Top5Item from './Top5Item'
 import WorkspaceScreen from './WorkspaceScreen'
 import SignInSide from './SignInSide'
 import BasicModal from './BasicModal'
+import DModal from './DModal'
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -28,5 +29,6 @@ export {
     Top5Item, 
     WorkspaceScreen,
     SignInSide,
-    BasicModal
+    BasicModal,
+    DModal
 }
