@@ -46,8 +46,8 @@ export default function DModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <Alert severity="warning">Are you sure you want to delete list {name}</Alert>
           </Typography>
-          <Button onClick={handledelete}>YES,DLETE THIS LIST</Button>
-          <Button onClick={handleClose}>NO,DO NOT DELETE</Button>
+          <Button variant="contained" onClick={handledelete}>YES,DLETE THIS LIST</Button>
+          <Button  variant="contained" onClick={handleClose}>NO,DO NOT DELETE</Button>
         </Box>
       </Modal>
     </div>

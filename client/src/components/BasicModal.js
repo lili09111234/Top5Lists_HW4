@@ -28,7 +28,6 @@ export default function BasicModal() {
     <div>
       <Modal
         open={auth.errorMessage!=null}
-        onClose={hadnleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -39,6 +38,7 @@ export default function BasicModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <Alert severity="error">{auth.errorMessage}</Alert>
           </Typography>
+          <Button variant="contained" onClick={hadnleClose}>Close</Button>
         </Box>
       </Modal>
     </div>
